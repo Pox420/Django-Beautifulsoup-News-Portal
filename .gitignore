@@ -15,7 +15,7 @@ docker-compose.yml
 /static/
 /dvs_db_backup/
 naxa_utilities/local_setting.py
-media
+mediaS
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
