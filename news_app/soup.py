@@ -21,9 +21,18 @@ for home in homepage_url:
     r = requests.get(home)
     soup = bs(r.text, 'html.parser')
     title = soup.find('title').text
-    image_link = soup.find('main').find('div', {'class': 'col-sm-8'}).find('img').get('src')
-    sub_title = soup.find('main').find('div', {'class': 'col-sm-8'}).find('span').text
-    main_content = soup.find('main').find('div', {'class': 'col-sm-8'}).find('section').text
+    try:
+        image_link = soup.find('main').find('div', {'class': 'col-sm-12'}).find('img').get('src')
+    except:
+        image_link = soup.find('main').find('div', {'class': 'col-sm-8'}).find('img').get('src')
+    try:
+        sub_title = soup.find('main').find('div', {'class': 'col-sm-12'}).find('span').text
+    except:
+        sub_title = soup.find('main').find('div', {'class': 'col-sm-8'}).find('span').text
+    try:
+        main_content = soup.find('main').find('div', {'class': 'col-sm-12'}).find('section').text
+    except:
+        main_content = soup.find('main').find('div', {'class': 'col-sm-8'}).find('section').text
     # print(title, image_link, sub_title, main_content)
     detail = {
         'title': title,
@@ -33,7 +42,7 @@ for home in homepage_url:
     }
     page_details.append(detail)
 
-print(type('page_details'))
+# print(type('page_details'))
 
 
 # df = pd.DataFrame(page_details)

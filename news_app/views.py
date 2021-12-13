@@ -23,9 +23,10 @@ def index(request):
     }
     return render(request, 'news_app/index.html',context=context)
 
-def detail_page(request):
-    # context = {
-    #     'soup':soup.page_details
-    # }
-    # return render(request, 'news_app/detail_page.html',context=context)
-    pass
+def detail_page(request, id):
+    news = NewsPortal.objects.get(id=id)
+
+    context = {
+        'news':news,
+    }
+    return render(request, 'news_app/details.html',context=context)
