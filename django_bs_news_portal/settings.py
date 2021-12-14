@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'news_app',
     'rest_framework',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'django_bs_news_portal.urls'
+
+
+AUTH_USER_MODEL = 'user.User' 
 
 TEMPLATES = [
     {
