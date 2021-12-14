@@ -1,6 +1,6 @@
 {% extends 'news_app/base.html' %}
 {% block title %}
-Register
+Login
 {% endblock %}
 {% block body %}
 
@@ -11,7 +11,9 @@ Register
     <h1>Login</h1>
     <form method="POST">
         {% csrf_token %}
-        {{ form|crispy }}
+        <!-- {{ form|crispy }} -->
+        {{ form.email|as_crispy_field }}
+        {{ form.password1|as_crispy_field }}
         <button class="btn btn-primary" type="submit">Login</button>
     </form>
     <p class="text-center">If you new, please sign up! <a href="{% url 'register' %}">Sign up</a> instead.</p>
