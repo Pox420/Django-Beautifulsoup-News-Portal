@@ -1,0 +1,21 @@
+{% extends 'news_app/base.html' %}
+{% block title %}
+Register
+{% endblock %}
+{% block body %}
+
+{% load crispy_forms_tags %}
+
+<!--Register-->
+<div class="container py-5">
+    <h1>Login</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+    <p class="text-center">If you new, please sign up! <a href="{% url 'register' %}">Sign up</a> instead.</p>
+</div>
+
+{% endblock %}
+
