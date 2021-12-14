@@ -22,7 +22,7 @@ mediaS
 # Byte-compiled / optimized / DLL files
 kathmandu_post.csv
 .ipynb_checkpoints
-news_app/soup.ipynb_checkpoints
+soup.ipynb_checkpoints
 # Distribution / packaging
 
 MANIFEST

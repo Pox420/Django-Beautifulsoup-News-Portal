@@ -6,8 +6,17 @@ from .serializer import NewsPortalSerializer
 from .models import NewsPortal
 from rest_framework.response import Response
 from django.http import JsonResponse
+from rest_framework.pagination import PageNumberPagination
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 6
+
 
 class NewsPortalViewSet(ReadOnlyModelViewSet):
+    pagination_class = StandardResultsSetPagination
     permission_classes = (IsAuthenticated,)
     queryset = NewsPortal.objects.all()
     serializer_class = NewsPortalSerializer
