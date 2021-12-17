@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'news_app',
     'rest_framework',
-    'user',
+    'user.apps.UserConfig',
     'crispy_forms',
 ]
 
@@ -57,6 +57,12 @@ ROOT_URLCONF = 'django_bs_news_portal.urls'
 
 
 AUTH_USER_MODEL = 'user.User' 
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_REDIRECT_URL = '/'
+SOCIALACCOUNT_QUERY_EMAIL = True
 
 TEMPLATES = [
     {
@@ -129,3 +135,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sunildjangotest@gmail.com'
+EMAIL_HOST_PASSWORD = 'Test12345@'
+EMAIL_USE_TLS = True

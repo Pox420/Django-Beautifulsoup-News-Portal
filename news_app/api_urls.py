@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'news', api_views.NewsPortalViewSet, basename='news')
+router.register(r'user_details', api_views.UserDetailsViewSet, basename='user_details')
 
 urlpatterns = [
     path('', include(router.urls)),

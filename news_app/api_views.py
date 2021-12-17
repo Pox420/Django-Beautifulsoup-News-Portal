@@ -2,12 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from .serializer import NewsPortalSerializer
+from .serializer import NewsPortalSerializer, UserDetailsSerializer
 from .models import NewsPortal
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.pagination import PageNumberPagination
-
+from django.contrib.auth import get_user_model
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 4
@@ -33,3 +33,12 @@ class NewsPortalViewSet(ReadOnlyModelViewSet):
 #         queryset = NewsPortal.objects.all()
 #         serializer = NewsPortalSerializer(queryset, many=True)
 #         return Response(serializer.data)
+
+
+class UserDetailsViewSet(ReadOnlyModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = get_user_model().objects.all()
+    serializer_class = UserDetailsSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().filter(id=self.request.user.id)
