@@ -50,6 +50,7 @@ def register(request):
             send_verification_email(user)
 
             messages.success(request, "User created successfully")
+            messages.success(request, "Check your email inbox to verify your email")
             return redirect('login_user')
         else:
             messages.error(request, "Passwords do not match")
@@ -71,7 +72,7 @@ def login_user(request):
                 # Redirect to index page.
                 return redirect('/')
             else:
-                messages.error(request, "Email not verified")
+                messages.error(request, "First you need to verify your email")
                 return redirect('login_user')
         else:
             messages.error(request, "Either email/password is incorrect or your email is not verified")
