@@ -32,7 +32,7 @@ def index(request):
         }
         return render(request, 'news_app/index.html',context=context)
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/user/login/')
 def detail_page(request, id):
     news = NewsPortal.objects.get(id=id)
     form = UserForm()
