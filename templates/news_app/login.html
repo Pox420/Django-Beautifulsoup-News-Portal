@@ -9,6 +9,13 @@ Login
 <!--Register-->
 <div class="container py-5">
     <h1>Login</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <p class="text-danger"> {{ message }} </p>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <form method="POST">
         {% csrf_token %}
         <!-- {{ form|crispy }} -->
@@ -20,4 +27,3 @@ Login
 </div>
 
 {% endblock %}
-

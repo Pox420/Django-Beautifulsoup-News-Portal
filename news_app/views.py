@@ -4,10 +4,42 @@ from news_app.models import NewsPortal
 from . import soup
 from user.forms import UserForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
+# def index(request):
+#     try:
+#         print('index started')
+#         for i in soup.page_details:
+#             title = i['title']
+#             image_link = i['image_link']
+#             sub_title = i['sub_title']
+#             main_content = i['main_content']
+
+#             if NewsPortal.objects.filter(title=title).exists():
+#                 pass
+#             else:
+#                 NewsPortal.objects.create(title=title, image_link=image_link, sub_title=sub_title, main_content=main_content)
+#                 print('created')
+
+#         news = NewsPortal.objects.all().order_by('-id')
+
+#         context = {
+#             'news':news,
+#         }
+#         print('index ended')
+#         return render(request, 'news_app/index.html',context=context)
+#     except Exception as e:
+#         news = NewsPortal.objects.all().order_by('-id')
+#         context = {
+#             'news':news,
+#         }
+#         return render(request, 'news_app/index.html',context=context)
+
+
 def index(request):
     try:
+        print('index started')
         for i in soup.page_details:
             title = i['title']
             image_link = i['image_link']
@@ -18,19 +50,28 @@ def index(request):
                 pass
             else:
                 NewsPortal.objects.create(title=title, image_link=image_link, sub_title=sub_title, main_content=main_content)
+                print('created')
 
-        news = NewsPortal.objects.all().order_by('-id')
+        user_list = NewsPortal.objects.all()
+        page = request.GET.get('page', 1)
 
-        context = {
-            'news':news,
-        }
-        return render(request, 'news_app/index.html',context=context)
+        paginator = Paginator(user_list, 6)
+        try:
+            users = paginator.page(page)
+        except PageNotAnInteger:
+            users = paginator.page(1)
+        except EmptyPage:
+            users = paginator.page(paginator.num_pages)
+        return render(request, 'news_app/index.html', { 'users': users })
     except Exception as e:
         news = NewsPortal.objects.all().order_by('-id')
         context = {
             'news':news,
         }
         return render(request, 'news_app/index.html',context=context)
+
+
+
 
 @login_required(login_url='/user/login/')
 def detail_page(request, id):

@@ -73,6 +73,9 @@ def login_user(request):
             else:
                 messages.error(request, "Email not verified")
                 return redirect('login_user')
+        else:
+            messages.error(request, "Either email/password is incorrect or your email is not verified")
+            return redirect('login_user')
     else:
         form = UserForm()
         return render(request, "news_app/login.html", {"form": form})
