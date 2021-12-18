@@ -21,6 +21,8 @@ Login
         <!-- {{ form|crispy }} -->
         {{ form.email|as_crispy_field }}
         {{ form.password1|as_crispy_field }}
+        <a href="{% url 'forgot_password' %}" class="mt-3">Forgot password?</a><br>
+
         <button class="btn btn-primary" type="submit">Login</button>
     </form>
     <p class="text-center">If you new, please sign up! <a href="{% url 'register' %}">Sign up</a> instead.</p>

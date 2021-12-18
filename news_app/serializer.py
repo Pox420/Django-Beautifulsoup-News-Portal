@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class NewsPortalSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsPortal
-        fields = '__all__'
+        fields = ['title','image_link','sub_title','main_content']
 
 class UserDetailsSerializer(serializers.ModelSerializer):
     

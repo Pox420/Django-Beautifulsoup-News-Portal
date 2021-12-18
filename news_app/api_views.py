@@ -21,6 +21,9 @@ class NewsPortalViewSet(ReadOnlyModelViewSet):
     queryset = NewsPortal.objects.all()
     serializer_class = NewsPortalSerializer
 
+    def get_queryset(self):
+        return super().get_queryset().all().order_by('-id')[:10]
+
 
 # class NewsPortalViewSet(APIView):
 #     def get(self, request, format=None, id=None):

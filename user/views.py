@@ -96,3 +96,45 @@ def verify_email(request, token):
         user.save()
         messages.success(request, "Email verified successfully")
         return redirect('login_user')
+
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        try:
+            user = User.objects.get(email=email)
+        except:
+            user = None
+         
+        if user is not None:
+            user.refresh_from_db()
+            def send_forgot_password_email(user):
+                current_site = get_current_site(request)
+                email = [user.email, ]
+                subject = "Your password reset link"
+                email_from = EMAIL_HOST_USER
+                message = f'Click in the link to reset your password {current_site}/user/reset-password/{user.forgot_password}'
+                send_mail(subject, message, email_from, email)
+            send_forgot_password_email(user)
+            messages.success(request, "Check your email inbox to reset your password")
+            return redirect('login_user')
+        else:
+            messages.error(request, "Email does not exist")
+            return redirect('forgot_password')
+    return render(request, "news_app/forgot_password.html")
+
+def reset_password(request, token):
+    user = get_user_model().objects.get(forgot_password=token)
+    if request.method == "POST":
+        password = request.POST['password1']
+        password1 = request.POST['password2']
+        if password == password1:
+            user.password = password
+            user.set_password(user.password)
+            user.save()
+            messages.success(request, "Password reset successfully")
+            return redirect('login_user')
+        else:
+            messages.error(request, "Passwords do not match")
+            return redirect('reset_password')
+    return render(request, "news_app/reset_password.html")
