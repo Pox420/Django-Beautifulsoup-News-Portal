@@ -124,17 +124,28 @@ def forgot_password(request):
     return render(request, "news_app/forgot_password.html")
 
 def reset_password(request, token):
-    user = get_user_model().objects.get(forgot_password=token)
-    if request.method == "POST":
-        password = request.POST['password1']
-        password1 = request.POST['password2']
-        if password == password1:
-            user.password = password
-            user.set_password(user.password)
-            user.save()
-            messages.success(request, "Password reset successfully")
-            return redirect('login_user')
-        else:
-            messages.error(request, "Passwords do not match")
-            return redirect('reset_password')
-    return render(request, "news_app/reset_password.html")
+    try:
+        user = get_user_model().objects.get(forgot_password=token)
+    except:
+        user = None
+    if user is not None:
+        if request.method == "POST":
+            password = request.POST['password1']
+            password1 = request.POST['password2']
+            if password == password1:
+                user.password = password
+                user.set_password(user.password)
+                user.forgot_password = forgot_password_token()
+                user.email_token = generate_token()
+                user.save()
+
+                user.refresh_from_db()
+                messages.success(request, "Password reset successfully")
+                return redirect('login_user')
+            else:
+                messages.error(request, "Passwords do not match")
+                return redirect('reset_password')
+        return render(request, "news_app/reset_password.html")
+    else:
+        messages.error(request, "Token does not exist")
+        return redirect('forgot_password')
