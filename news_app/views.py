@@ -51,10 +51,9 @@ def index(request):
             else:
                 NewsPortal.objects.create(title=title, image_link=image_link, sub_title=sub_title, main_content=main_content)
                 print('created')
-
-        user_list = NewsPortal.objects.all()
+        user_list = NewsPortal.objects.all().order_by('-id')
+        print('index ended')
         page = request.GET.get('page', 1)
-
         paginator = Paginator(user_list, 6)
         try:
             users = paginator.page(page)
@@ -70,7 +69,8 @@ def index(request):
         }
         return render(request, 'news_app/index.html',context=context)
 
-
+def about(request):
+    return render(request, 'news_app/about.html')
 
 
 @login_required(login_url='/user/login/')

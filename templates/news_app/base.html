@@ -28,10 +28,11 @@
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" disabled="disabled" href="/">Welcome - {{ request.user.email }}</a></li>
                     <li class="nav-item"><a class="nav-link" href="/api/v1/">Api</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout_user' %}">Logout</a></li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/api/v1/">Api</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'login_user' %}">Login</a></li>
                     {% endif %}
