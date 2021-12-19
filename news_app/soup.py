@@ -3,7 +3,11 @@ import requests
 import pandas as pd
 
 URL = 'https://kathmandupost.com/'
-r = requests.get(URL)
+headers = {
+"Accept-Language" : "en-US,en;q=0.5",
+"User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0",
+}
+r = requests.get(URL, headers=headers)
 soup = bs(r.text, 'html.parser')
 
 try:
