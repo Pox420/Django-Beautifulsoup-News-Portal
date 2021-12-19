@@ -1,46 +1,15 @@
 from django.shortcuts import render
 
 from news_app.models import NewsPortal
-from . import soup
+from .soup import page_details
 from user.forms import UserForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-# Create your views here.
-# def index(request):
-#     try:
-#         print('index started')
-#         for i in soup.page_details:
-#             title = i['title']
-#             image_link = i['image_link']
-#             sub_title = i['sub_title']
-#             main_content = i['main_content']
-
-#             if NewsPortal.objects.filter(title=title).exists():
-#                 pass
-#             else:
-#                 NewsPortal.objects.create(title=title, image_link=image_link, sub_title=sub_title, main_content=main_content)
-#                 print('created')
-
-#         news = NewsPortal.objects.all().order_by('-id')
-
-#         context = {
-#             'news':news,
-#         }
-#         print('index ended')
-#         return render(request, 'news_app/index.html',context=context)
-#     except Exception as e:
-#         news = NewsPortal.objects.all().order_by('-id')
-#         context = {
-#             'news':news,
-#         }
-#         return render(request, 'news_app/index.html',context=context)
-
-
 def index(request):
     try:
         print('index started')
-        for i in soup.page_details:
+        for i in page_details:
             title = i['title']
             image_link = i['image_link']
             sub_title = i['sub_title']

@@ -6,14 +6,35 @@ URL = 'https://kathmandupost.com/'
 r = requests.get(URL)
 soup = bs(r.text, 'html.parser')
 
-main =soup.find("div", {"id": "mainContent"}).find('main').find('div', {'class': 'order'}).find_all('div')[0:2]
-homepage_url = []
-
-for i in main:
-    links = i.find_all('article')
-    for j in links:
-        link = 'https://kathmandupost.com' +j.find('h3').find('a').get('href')
+try:
+    homepage_url = []
+    articles = soup.find_all('article')
+    for art in articles:
+        link = 'https://kathmandupost.com' +art.find('a').get('href')
         homepage_url.append(link)
+except:
+    main =soup.find("div", {"id": "mainContent"}).find('main').find('div', {'class': 'order'}).find_all('div')[0:2]
+    homepage_url = []
+
+    for i in main:
+        links = i.find_all('article')
+        for j in links:
+            link = 'https://kathmandupost.com' +j.find('h3').find('a').get('href')
+            homepage_url.append(link)
+
+if len(homepage_url) > 5 and len(homepage_url) < 10:
+    homepage_url = homepage_url
+elif len(homepage_url) > 10 and len(homepage_url) < 20:
+    legh = len(homepage_url)/2
+    homepage_url = homepage_url[0:int(legh)]
+elif len(homepage_url) > 20 and len(homepage_url) < 30:
+    legh = len(homepage_url)/3
+    homepage_url = homepage_url[0:int(legh)]
+elif len(homepage_url) > 30:
+    legh = len(homepage_url)/4
+    homepage_url = homepage_url[0:int(legh)]
+else:
+    homepage_url = homepage_url
 
 
 page_details = []
